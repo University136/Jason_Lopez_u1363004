@@ -27,31 +27,31 @@ def setup_network():
 def startup_ospf():
     print("Starting ospf")
     # Calls service frr restart on each router container as the appropriate configures are already in place.
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r1-1", "service", "frr", "restart"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "service", "frr", "restart"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r3-1", "service", "frr", "restart"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "service", "frr", "restart"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r1-1", "service", "frr", "restart"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r2-1", "service", "frr", "restart"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r3-1", "service", "frr", "restart"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r4-1", "service", "frr", "restart"])
     return
 
 # Install routes on each host/endpoint connected to your routed topology
 def install_routes():
     print("installing route ha to hb")
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-ha-1", "route", "add", "-net",
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-ha-1", "route", "add", "-net",
                      "10.0.15.0/24", "gw", "10.0.14.4"])
     print("installing route hb to ha")
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-hb-1", "route", "add", "-net",
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-hb-1", "route", "add", "-net",
                      "10.0.14.0/24", "gw", "10.0.15.4"])
     return
 
 # Ability to move traffic between the "north" path (R1,R2,R3) and the "south" path (R1,R4,R3) or vice versa
 def swap_traffic_north():
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospflower"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospfraise"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r2-1", "bash", "/root/ospflower"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r4-1", "bash", "/root/ospfraise"])
     return
 
 def swap_traffic_south():
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospfraise"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospflower"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r2-1", "bash", "/root/ospfraise"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "jason_lopez_u1363004-r4-1", "bash", "/root/ospflower"])
     return
 
 # Show the available commands that can be taken on the orchestrator.
