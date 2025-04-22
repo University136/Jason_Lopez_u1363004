@@ -25,3 +25,4 @@ Assumptions: This program assumes that dockersetup from cs4480-2025-s/pa3/part1/
              called from inside the main "Jason_Lopez_u1363004" folder. I mean 
              the path should show ".../Jason_Lopez_u1363004".
 
+Doing a tcpdump on r2, r4, or hb will show a ospfv2 hello as well as any pings that are being sent across the network.
