@@ -7,6 +7,10 @@ RUN apt-get -y install python3-pip
 RUN apt-get -y install telnet
 RUN pip3 install pexpect --break-system-packages
 
+RUN chmod +x frrsetup
+RUN chmod +x ospfraise
+RUN chmod +x ospflower
+
 COPY ./frrsetup /root
 RUN /root/frrsetup
 COPY ./daemons /etc/frr/daemons
