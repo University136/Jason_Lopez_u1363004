@@ -1,7 +1,7 @@
 # Author: Jason Lopez
 # Class: CS4480
 # Assignment: PA3 Orchestrator
-# Date: 4/21/25
+# Date: 4/22/25
 import subprocess
 import sys
 
@@ -60,11 +60,11 @@ def show_help():
     print("-c setup")
     print("Startup OSPF daemons on topology:")
     print("-c startup ospf")
-    print("Add endpoint routes")
+    print("Add endpoint routes:")
     print("-c install routes")
-    print("Move traffic path from the current route to the north route")
+    print("Move traffic path from the current route to the north route:")
     print("-c swap path north")
-    print("Move traffic path from the current route to the south route")
+    print("Move traffic path from the current route to the south route:")
     print("-c swap path south")
     return
 
