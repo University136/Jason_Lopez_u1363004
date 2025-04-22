@@ -8,7 +8,9 @@ import subprocess
 # Construct the network topology
 def setup_network():
     # setup files that will be needed to be called later.
-    subprocess.call(["chmod", "-x", "frrsetup", "&&", "chmod", "-x", "frrrestart"])
+    subprocess.call(["chmod", "+x", "frrsetup"])
+    subprocess.call(["chmod", "+x", "frrrestart"])
+    subprocess.call(["chmod", "+x", "daemons])
 
     print("Setting up network")
     ans = subprocess.call(["sudo", "docker", "compose", "up", "-d"])
