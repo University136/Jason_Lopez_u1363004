@@ -50,8 +50,8 @@ def swap_traffic_north():
     #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
     # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
     #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "ospflower"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "ospfraise"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospflower"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospfraise"])
     return
 
 def swap_traffic_south():
@@ -59,8 +59,8 @@ def swap_traffic_south():
     #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
     # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
     #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "ospfraise"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "ospflower"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospfraise"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospflower"])
     return
 
 # Show the available commands that can be taken on the orchestrator.
