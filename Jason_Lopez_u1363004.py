@@ -3,6 +3,7 @@
 # Assignment: PA3 Orchestrator
 # Date: 4/21/25
 import subprocess
+import sys
 
 
 # Construct the network topology
@@ -67,21 +68,24 @@ def show_help():
     print("-c swap path south")
     return
 
-input_string = input()
-command_string = ""
-print(input_string[3:])
+total_args = len(sys.argv)
 
-if input_string == "-h":
-    show_help()
-elif input_string[0:2] == "-c":
-    command_string = input_string[3:]
-    if command_string == "setup":
-        setup_network()
-    elif command_string == "startup ospf":
-        startup_ospf()
-    elif command_string == "install routes":
-        install_routes()
-    elif command_string == "swap path north":
-        swap_traffic_north()
-    elif command_string == "swap path south":
-        swap_traffic_south()
+if total_args > 1:
+    #input_string = input()
+    input_string = sys.argv[1]
+    command_string = ""
+
+    if input_string == "-h":
+        show_help()
+    elif input_string == "-c":
+        command_string = sys.argv[2]
+        if command_string == "setup":
+            setup_network()
+        elif command_string == "startup":
+            startup_ospf()
+        elif command_string == "install":
+            install_routes()
+        elif command_string == "swap" and sys.argv[4] == "north":
+            swap_traffic_north()
+        elif command_string == "swap" and sys.argv[4] == "south":
+            swap_traffic_south()
