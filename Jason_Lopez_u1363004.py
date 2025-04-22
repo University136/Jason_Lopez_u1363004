@@ -1,7 +1,7 @@
 # Author: Jason Lopez
 # Class: CS4480
 # Assignment: PA3 Orchestrator
-# Date: 4/20/25
+# Date: 4/21/25
 import subprocess
 
 
@@ -14,8 +14,6 @@ def setup_network():
 
     print("Setting up network")
     ans = subprocess.call(["sudo", "docker", "compose", "up", "-d"])
-
-    # Call frr restart on each router container
 
     if ans == 0:
         print("Topology setup finished")
@@ -46,19 +44,11 @@ def install_routes():
 
 # Ability to move traffic between the "north" path (R1,R2,R3) and the "south" path (R1,R4,R3) or vice versa
 def swap_traffic_north():
-    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "'configure terminal'",
-    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
-    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
-    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
     subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospflower"])
     subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospfraise"])
     return
 
 def swap_traffic_south():
-   # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "'configure terminal'",
-    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
-    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
-    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
     subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "bash", "/root/ospfraise"])
     subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "bash", "/root/ospflower"])
     return
@@ -71,8 +61,10 @@ def show_help():
     print("-c startup ospf")
     print("Add endpoint routes")
     print("-c install routes")
-    print("Move traffic path from the current route to the opposite route")
-    print("-c swap path")
+    print("Move traffic path from the current route to the north route")
+    print("-c swap path north")
+    print("Move traffic path from the current route to the south route")
+    print("-c swap path south")
     return
 
 input_string = input()
@@ -89,5 +81,7 @@ elif input_string[0:2] == "-c":
         startup_ospf()
     elif command_string == "install routes":
         install_routes()
-    elif command_string == "swap path":
-        swap_traffic_path()
+    elif command_string == "swap path north":
+        swap_traffic_north()
+    elif command_string == "swap path south":
+        swap_traffic_south()
