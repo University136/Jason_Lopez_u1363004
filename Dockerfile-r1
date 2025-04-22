@@ -12,6 +12,6 @@ RUN /root/frrsetup
 COPY ./daemons /etc/frr/daemons
 COPY ./r1_frr.conf /etc/frr/frr.conf
 COPY ./ospfraise /root
-COPY ./opsflower /root
+COPY ./ospflower /root
 
 CMD ["bash"]
