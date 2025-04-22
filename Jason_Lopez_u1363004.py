@@ -9,7 +9,8 @@ import subprocess
 def setup_network():
     # setup files that will be needed to be called later.
     subprocess.call(["chmod", "+x", "frrsetup"])
-    subprocess.call(["chmod", "+x", "frrrestart"])
+    subprocess.call(["chmod", "+x", "ospfraise"])
+    subprocess.call(["chmod", "+x", "ospflower"])
 
     print("Setting up network")
     ans = subprocess.call(["sudo", "docker", "compose", "up", "-d"])
@@ -45,17 +46,21 @@ def install_routes():
 
 # Ability to move traffic between the "north" path (R1,R2,R3) and the "south" path (R1,R4,R3) or vice versa
 def swap_traffic_north():
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "\'configure terminal\'",
-                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 10\'", "-c", "\'end\'"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "\'configure terminal\'",
-                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 5\'", "-c", "\'end\'"])
+    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "'configure terminal'",
+    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
+    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
+    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "ospflower"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "ospfraise"])
     return
 
 def swap_traffic_south():
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "\'configure terminal\'",
-                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 5\'", "-c", "\'end\'"])
-    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "\'configure terminal\'",
-                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 10\'", "-c", "\'end\'"])
+   # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "'configure terminal'",
+    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 10'", "-c", "'end'"])
+    # subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "'configure terminal'",
+    #                  "-c", "'interface eth0'", "-c", "'ip ospf cost 5'", "-c", "'end'"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "ospfraise"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "ospflower"])
     return
 
 # Show the available commands that can be taken on the orchestrator.
