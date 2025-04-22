@@ -44,7 +44,18 @@ def install_routes():
     return
 
 # Ability to move traffic between the "north" path (R1,R2,R3) and the "south" path (R1,R4,R3) or vice versa
-def swap_traffic_path():
+def swap_traffic_north():
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "\'configure terminal\'",
+                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 10\'", "-c", "\'end\'"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "\'configure terminal\'",
+                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 5\'", "-c", "\'end\'"])
+    return
+
+def swap_traffic_south():
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r2-1", "vtysh", "-c", "\'configure terminal\'",
+                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 5\'", "-c", "\'end\'"])
+    subprocess.call(["sudo", "docker", "exec", "-it", "u1363004docker-r4-1", "vtysh", "-c", "\'configure terminal\'",
+                     "-c", "\'interface eth0\'", "-c", "\'ip ospf cost 10\'", "-c", "\'end\'"])
     return
 
 # Show the available commands that can be taken on the orchestrator.
